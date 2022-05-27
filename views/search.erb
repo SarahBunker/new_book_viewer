@@ -1,0 +1,27 @@
+<h2 class="content-subhead">Search</h2>
+
+<form action="/search" method="get">
+  <input name="query" value="<%= params[:query] %>">
+  <button type="submit">Search</button>
+</form>
+
+<% if @term %>
+  <% if @results.empty? %>
+    <p>Sorry, no matches were found.</p>
+  <% else %>
+    <h2 class="content-subhead">Results found for '<%= @term %>'</h2>
+    <h3 class="content-subhead">Total: <%= @results.size %></h3>
+    
+    <% @results.each do |result| %>
+      <ul>
+        <li class="pure-menu-item">
+          <a href="/chapters/<%= result[:number] %>#paragraph<%= result[:id_num] %>" class="pure-menu-link"><strong><%= result[:name] %></strong>:</a>
+          <ul>
+            <li><%= bold_search(result[:paragraph]) %></li>
+          </ul>
+        </li>
+      </ul>
+    <% end %>
+  <% end %>
+<% end %>
+
